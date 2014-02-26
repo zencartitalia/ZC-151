@@ -21,16 +21,7 @@
     $ez_pages_name = 'Click Here';
 
     if ($ez_pages_chapter == 0) {
-      // query modified for multi-language support
-      $page_query = $db->Execute("select e.pages_id, e.page_open_new_window, e.page_is_ssl, e.alt_url, e.alt_url_external, et.pages_title 
-                   from  " . TABLE_EZPAGES . " e, " . TABLE_EZPAGES_TEXT . " et  
-                   where e.pages_id='" . (int)$ez_pages_id . "'
-                   and e.pages_id = et.pages_id 
-                   and et.languages_id = '" . (int)$_SESSION['languages_id'] . "'  
-                   and status_header = 1 
-                   and header_sort_order > 0 
-                   order by header_sort_order, pages_title");
-      // end of modification  
+      $page_query = $db->Execute("select * from " . TABLE_EZPAGES . " where pages_id='" . (int)$ez_pages_id . "' limit 1");
 
       $ez_pages_id = $page_query->fields['pages_id'];
       $ez_pages_name = $page_query->fields['pages_title'];
